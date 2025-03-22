@@ -326,7 +326,7 @@ const AdminDashboard = () => {
                   <FiUsers />
                 </CardIcon>
                 <CardContent>
-                  <CardTitle>Total Users</CardTitle>
+                  <CardTitle>Course</CardTitle>
                   <CardValue>{dashboardData.users?.toLocaleString()}</CardValue>
                 </CardContent>
               </AnalyticsCard>
@@ -336,8 +336,8 @@ const AdminDashboard = () => {
                   <FiActivity />
                 </CardIcon>
                 <CardContent>
-                  <CardTitle>New Users (30d)</CardTitle>
-                  <CardValue>+{dashboardData.newUsers?.toLocaleString()}</CardValue>
+                  <CardTitle>Vocabulary</CardTitle>
+                  <CardValue>+{dashboardData.newUsers?.toLocaleString()}/500</CardValue>
                 </CardContent>
               </AnalyticsCard>
 
@@ -356,14 +356,14 @@ const AdminDashboard = () => {
                   <FiDollarSign />
                 </CardIcon>
                 <CardContent>
-                  <CardTitle>Revenue (30d)</CardTitle>
+                  <CardTitle>Ranking</CardTitle>
                   <CardValue>${dashboardData.revenue?.toLocaleString()}</CardValue>
                 </CardContent>
               </AnalyticsCard>
             </AnalyticsGrid>
 
             <ChartContainer>
-              <h3>User Growth</h3>
+              <h3>Course Tracking</h3>
               <ResponsiveContainer width="100%" height="90%">
                 <LineChart data={dashboardData.userGrowth}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -381,12 +381,12 @@ const AdminDashboard = () => {
             </ChartContainer>
 
             <ChartContainer>
-              <h3>Recent Signups</h3>
+              <h3>Recent Activities</h3>
               <RecentActivityTable>
                 <TableHeader>
                   <tr>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
+                    <TableCell>Activity</TableCell>
+                    <TableCell>Score</TableCell>
                     <TableCell>Join Date</TableCell>
                   </tr>
                 </TableHeader>

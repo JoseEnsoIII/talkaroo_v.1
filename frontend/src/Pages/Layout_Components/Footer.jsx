@@ -89,7 +89,7 @@ const Footer = () => {
           <FooterLinks>
             <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
             <FooterLink href="/terms-of-service">Terms of Service</FooterLink>
-            <FooterLink href="/contact">Contact Us</FooterLink>
+            <FooterLink href="/contact-us">Contact Us</FooterLink>
           </FooterLinks>
         </FooterBottom>
       </FooterContent>
