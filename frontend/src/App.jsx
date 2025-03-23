@@ -5,6 +5,8 @@ import { useState } from "react";
 import Navbar from "./Pages/Layout_Components/Navbar";
 import Footer from "./Pages/Layout_Components/Footer";
 import Chatbot from "./Pages/Layout_Components/Floating_Chatbot";
+import Feedback from "./Components/compo/compo-pages/Feedback";
+
 
 // Auth Pages
 import Login from "./Pages/Auth/Login";
@@ -77,6 +79,8 @@ function App() {
         <Route path="/practice" element={<Practice />} />
         <Route path="/Talkaroo-AI" element={<AI />} />
         <Route path="/courses" element={<Courses />} />
+
+        <Route path="/feedback" element={<Feedback />} />
 
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/settings" element={<Settings />} />
