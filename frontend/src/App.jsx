@@ -5,14 +5,11 @@ import { useState } from "react";
 import Navbar from "./Pages/Layout_Components/Navbar";
 import Footer from "./Pages/Layout_Components/Footer";
 import Chatbot from "./Pages/Layout_Components/Floating_Chatbot";
-import Feedback from "./Components/compo/compo-pages/Feedback";
-
 
 // Auth Pages
 import Login from "./Pages/Auth/Login";
 import SignUp from "./Pages/Auth/Register";
 import AdminLogin from "./Pages/Auth/Admin_login";
-import Users from "./Pages/Dashboard/Dashboard_Pages.jsx/Users";
 
 // Admin Pages
 import AdminDashboard from "./Pages/Dashboard/Admin_Dashboard";
@@ -22,6 +19,7 @@ import AdminUsers from "./Pages/Dashboard/Dashboard_Pages.jsx/Dashboard_Users";
 import ProfilePage from "./Pages/Dashboard/Client_Dashboard";
 import Settings from "./Pages/Dashboard/Dashboard_Pages.jsx/Settings";
 import NotificationPage from "./Pages/Dashboard/Dashboard_Pages.jsx/Notifications";
+import Users from "./Pages/Dashboard/Dashboard_Pages.jsx/Users";
 
 // Static Pages
 import Home from "./Pages/Static/Home";
@@ -40,6 +38,8 @@ import Courses from "./Pages/Dynamic_Pages/Courses";
 import AI from "./Pages/Dynamic_Pages/AI";
 import EnrollmentForm from "./Pages/Dynamic_Pages/Enrollment-Page";
 import Payment from "./Pages/Dynamic_Pages/Payment";
+import Feedback from "./Components/compo/compo-pages/Feedback";
+
 // Protected Route
 import ProtectedRoute from "./Components/ProtectedRoute";
 
@@ -61,35 +61,31 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/users" element={<Users />} />
+        {/* Public Routes with Navbar and Footer */}
+        <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+        <Route path="/about-us" element={<><Navbar /><AboutUs /><Footer /></>} />
+        <Route path="/contact-us" element={<><Navbar /><ContactUs /><Footer /></>} />
+        <Route path="/privacy-policy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
+        <Route path="/terms-of-service" element={<><Navbar /><TermsOfService /><Footer /></>} />
+        <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
+        <Route path="/signup" element={<><Navbar /><SignUp /><Footer /></>} />
+        <Route path="/community" element={<><Navbar /><Community /><Footer /></>} />
+        <Route path="/vocabulary" element={<><Navbar /><Vocabulary /><Footer /></>} />
+        <Route path="/grammar" element={<><Navbar /><Grammar /><Footer /></>} />
+        <Route path="/practice" element={<><Navbar /><Practice /><Footer /></>} />
+        <Route path="/Talkaroo-AI" element={<><Navbar /><AI /><Footer /></>} />
+        <Route path="/courses" element={<><Navbar /><Courses /><Footer /></>} />
+        <Route path="/feedback" element={<><Navbar /><Feedback /><Footer /></>} />
+        <Route path="/enroll/:courseName" element={<><Navbar /><EnrollmentForm /><Footer /></>} />
+        <Route path="/payment" element={<><Navbar /><Payment /><Footer /></>} />
 
-        <Route path="/community" element={<Community />} />
-        <Route path="/vocabulary" element={<Vocabulary />} />
-        <Route path="/grammar" element={<Grammar />} />
-        <Route path="/practice" element={<Practice />} />
-        <Route path="/Talkaroo-AI" element={<AI />} />
-        <Route path="/courses" element={<Courses />} />
-
-        <Route path="/feedback" element={<Feedback />} />
-
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/settings" element={<Settings />} />
-        <Route
-          path="/profile/notification"
-          element={<NotificationPage notifications={notifications} markAsRead={markAsRead} />}
-        />
-       <Route path="/enroll/:courseName" element={<EnrollmentForm />} />
-       <Route path="/payment" element={<Payment />} />
+        {/* Dashboard Routes without Navbar and Footer */}
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/profile/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path="/profile/notification" element={<ProtectedRoute><NotificationPage notifications={notifications} markAsRead={markAsRead} /></ProtectedRoute>} />
+        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        
         {/* Admin Routes */}
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
@@ -99,7 +95,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Chatbot />
-      <Footer />
     </Router>
   );
 }
