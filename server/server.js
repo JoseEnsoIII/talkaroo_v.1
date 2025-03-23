@@ -7,6 +7,8 @@ const courseRoutes = require("./routes/courses");
 const enrollRoutes = require("./routes/enrollRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 
+const feedbackRoutes = require('./routes/feedbackRoutes');
+
 const app = express();
 
 // Middleware
@@ -19,6 +21,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/enroll", enrollRoutes); // Register enrollment routes
 app.use("/api/chat", chatRoutes);
+
+app.use('/api/feedback', feedbackRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5001;

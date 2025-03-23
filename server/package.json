@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "node --no-deprecation server.js",
-  "dev": "nodemon server.js",
-  "postinstall": "npm install -g nodemon",
-  "build": "echo 'No build step required'"
-},
+    "start": "node --no-deprecation server.js",
+    "dev": "nodemon server.js",
+    "postinstall": "npm install -g nodemon",
+    "build": "echo 'No build step required'"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "node-cron": "^3.0.3",
     "openai": "^4.88.0",
     "pg": "^8.14.1",
     "pg-hstore": "^2.3.4",
