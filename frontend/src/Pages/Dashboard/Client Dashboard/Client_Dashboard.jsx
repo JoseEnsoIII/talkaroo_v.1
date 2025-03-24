@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FiUsers, FiBook, FiDollarSign, FiActivity, FiBell, FiAward, FiBookOpen, FiClock } from "react-icons/fi";
-import Sidebar from "../Dashboard/Sidebar";
+import Sidebar from "../Sidebar";
 import { Link } from 'react-router-dom';
 // Styled components
 

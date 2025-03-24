@@ -12,14 +12,17 @@ import SignUp from "./Pages/Auth/Register";
 import AdminLogin from "./Pages/Auth/Admin_login";
 
 // Admin Pages
-import AdminDashboard from "./Pages/Dashboard/Admin_Dashboard";
-import AdminUsers from "./Pages/Dashboard/Dashboard_Pages.jsx/Dashboard_Users";
+import AdminDashboard from "./Pages/Dashboard/Admin Dashboard/Admin_Dashboard";
+import AdminUsers from "./Pages/Dashboard/Dashboard_Pages/Dashboard_Users";
 
-// Client Pages
-import ProfilePage from "./Pages/Dashboard/Client_Dashboard";
-import Settings from "./Pages/Dashboard/Dashboard_Pages.jsx/Settings";
-import NotificationPage from "./Pages/Dashboard/Dashboard_Pages.jsx/Notifications";
-import Users from "./Pages/Dashboard/Dashboard_Pages.jsx/Users";
+// Client Pages | Dashboard
+import ClientDashboard from "./Pages/Dashboard/Client Dashboard/Client_Dashboard";
+import ClientProfile from "./Pages/Dashboard/Client Dashboard/Profile"
+import User_Notification from "./Pages/Dashboard/Client Dashboard/Notifications";
+import User_Course from "./Pages/Dashboard/Client Dashboard/My_Courses"
+import User_Certificate from "./Pages/Dashboard/Client Dashboard/Certificates"
+import User_Settings from "./Pages/Dashboard/Client Dashboard/Settings";
+import Users from "./Pages/Dashboard/Dashboard_Pages/Users";
 
 // Static Pages
 import Home from "./Pages/Static/Home";
@@ -30,14 +33,14 @@ import TermsOfService from "./Components/compo/compo-pages/TermsofService";
 import NotFound from "./Pages/Static/NotFound";
 
 // Dynamic Pages
-import Community from "./Pages/Dynamic_Pages/Community";
-import Vocabulary from "./Pages/Dynamic_Pages/Vocabulary";
-import Grammar from "./Pages/Dynamic_Pages/Grammar";
-import Practice from "./Pages/Dynamic_Pages/Practice";
-import Courses from "./Pages/Dynamic_Pages/Courses";
-import AI from "./Pages/Dynamic_Pages/AI";
-import EnrollmentForm from "./Pages/Dynamic_Pages/Enrollment-Page";
-import Payment from "./Pages/Dynamic_Pages/Payment";
+import Community from "./Pages/Dynamic Pages/Community";
+import Vocabulary from "./Pages/Dynamic Pages/Vocabulary";
+import Grammar from "./Pages/Dynamic Pages/Grammar";
+import Practice from "./Pages/Dynamic Pages/Practice";
+import Courses from "./Pages/Dynamic Pages/Courses";
+import AI from "./Pages/Dynamic Pages/AI";
+import EnrollmentForm from "./Pages/Dynamic Pages/Enrollment-Page";
+import Payment from "./Pages/Dynamic Pages/Payment";
 import Feedback from "./Components/compo/compo-pages/Feedback";
 
 // Protected Route
@@ -45,19 +48,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   // Notifications state
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "New course available!", read: false },
-    { id: 2, message: "Your enrollment has been approved!", read: false },
-  ]);
-
-  // Function to mark notifications as read
-  const markAsRead = (id) => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.map((notification) =>
-        notification.id === id ? { ...notification, read: true } : notification
-      )
-    );
-  };
+  
 
   return (
     <Router>
@@ -81,9 +72,14 @@ function App() {
         <Route path="/payment" element={<><Navbar /><Payment /><Footer /></>} />
 
         {/* Dashboard Routes without Navbar and Footer */}
-        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/profile/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path="/profile/notification" element={<ProtectedRoute><NotificationPage notifications={notifications} markAsRead={markAsRead} /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ClientDashboard />} />
+        <Route path="/dashboard/profile" element={<ClientProfile />} />
+        <Route path="/dashboard/notification" element={<User_Notification />} />
+        <Route path="/dashboard/my-courses" element={<User_Course />} />
+        <Route path="/dashboard/certificate" element={<User_Certificate />} />
+        <Route path="/dashboard/settings" element={<User_Settings />} />
+
+
         <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
         
         {/* Admin Routes */}

@@ -67,9 +67,9 @@ const Navbar = () => {
                   <DropdownLink to="/about-us">About Us</DropdownLink>
                   <DropdownLink to="/contact-us">Contact Us</DropdownLink>
                 </MobileDropdownLinks>
-                <DropdownLink to="/profile">Profile</DropdownLink>
-                <DropdownLink to="/profile/notification">Notifications</DropdownLink>
-                <DropdownLink to="/profile/settings">Settings</DropdownLink>
+                <DropdownLink to="/dashboard">Profile</DropdownLink>
+                <DropdownLink to="/dashboard/notification">Notifications</DropdownLink>
+                <DropdownLink to="/dashboard/settings">Settings</DropdownLink>
                 <DropdownButton onClick={handleLogout}>Logout</DropdownButton>
               </Dropdown>
             )}
