@@ -92,7 +92,7 @@ const NotificationDate = styled.span`
 const pageTitles = {
   "/dashboard": "Welcome to Your Dashboard",
   "/dashboard/my-courses": "My Courses",
-  "/profile": "User Profile",
+  "/dashboard/profile": "Profile",
   "/settings": "Settings",
 };
 
@@ -128,7 +128,7 @@ const DashboardBanner = () => {
                 unread={!notification.read}
               >
                 <NotificationLink 
-                  to="/profile/notification"
+                  to="/dashboard/notification"
                   onClick={() => {
                     markAsRead(notification.id);
                     setShowNotifications(false);

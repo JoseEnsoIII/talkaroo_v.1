@@ -299,7 +299,7 @@ const AdminDashboard = () => {
           unread={!notification.read}
         >
           <NotificationLink 
-            to="/profile/notification"
+            to="/dashboard/notification"
             onClick={() => {
               markAsRead(notification.id);
               setShowNotifications(false);

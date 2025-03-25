@@ -1,111 +1,126 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Sidebar from "../Sidebar";
-import { FiUser, FiEdit } from "react-icons/fi";
+import { FiUser, FiEdit, FiLock, FiMail } from "react-icons/fi";
 import axios from "axios";
+import DashboardBanner from "../../Layout_Components/Dashboard_Banner";
 
 // Styled components
 const DashboardContainer = styled.div`
   display: flex;
   min-height: 100vh;
-  width: 100%;
+  background: #f8fafc;
 `;
 
 const Content = styled.div`
   flex: 1;
-  padding: 2rem;
-  background: #f8f9fa;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-`;
-
-const WelcomeMessage = styled.h2`
-  margin: 0;
-  font-size: 1.5rem;
-  color: #2d3748;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const FormContainer = styled.div`
-  max-width: 100%;
-  margin: 0 auto;
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
 `;
 
 const FormRow = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
 `;
 
 const InputGroup = styled.div`
+  position: relative;
   flex: 1;
+  max-width: 400px;
 `;
 
 const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
-  color: #6c757d;
+  color: #64748b;
   font-size: 0.875rem;
+  font-weight: 500;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
 `;
 
 const Input = styled.input`
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
+  flex: 1;
+  padding: 0.875rem;
+  padding-left: 2.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f8fafc;
 
   &:focus {
     outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: white;
+  }
+
+  &:disabled {
+    background: #f1f5f9;
+    cursor: not-allowed;
   }
 `;
 
+const IconWrapper = styled.span`
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+`;
+
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 const SaveButton = styled.button`
-  background: #4a90e2;
+  background: ${({ secondary }) => (secondary ? "#64748b" : "#3b82f6")};
   color: white;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1rem;
+  font-weight: 500;
 
   &:hover {
-    background: #357abd;
+    background: ${({ secondary }) => (secondary ? "#475569" : "#2563eb")};
   }
 `;
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState({
     username: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
 
   const [editMode, setEditMode] = useState(false);
-  const userId = 1; // Replace with actual user ID (e.g., from authentication)
+  const userId = 1;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -136,40 +151,47 @@ const ProfilePage = () => {
   return (
     <DashboardContainer>
       <Sidebar />
+
       <Content>
-        <Header>
-          <WelcomeMessage>Profile</WelcomeMessage>
-        </Header>
+        <DashboardBanner />
 
         <FormContainer>
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
-            {editMode ? (
-              <>
-                <SaveButton onClick={handleSave}>
-                  <FiUser /> Save Changes
-                </SaveButton>
-                <SaveButton onClick={() => setEditMode(false)} style={{ background: "#6c757d" }}>
-                  Cancel
-                </SaveButton>
-              </>
-            ) : (
-              <SaveButton onClick={() => setEditMode(true)}>
-                <FiEdit /> Edit Profile
-              </SaveButton>
-            )}
-          </div>
-
+          {/* Username Input with Action Buttons on the Right */}
           <FormRow>
             <InputGroup>
               <Label>Username</Label>
-              <Input
-                value={userData.username}
-                onChange={(e) => handleInputChange("username", e.target.value)}
-                disabled={!editMode}
-              />
+              <InputWrapper>
+                <IconWrapper>
+                  <FiUser size={18} />
+                </IconWrapper>
+                <Input
+                  value={userData.username}
+                  onChange={(e) => handleInputChange("username", e.target.value)}
+                  disabled={!editMode}
+                  placeholder="Enter username"
+                />
+              </InputWrapper>
             </InputGroup>
+
+            <ActionButtons>
+              {editMode ? (
+                <>
+                  <SaveButton onClick={handleSave}>
+                    <FiUser /> Save Changes
+                  </SaveButton>
+                  <SaveButton onClick={() => setEditMode(false)} secondary>
+                    Cancel
+                  </SaveButton>
+                </>
+              ) : (
+                <SaveButton onClick={() => setEditMode(true)}>
+                  <FiEdit /> Edit Profile
+                </SaveButton>
+              )}
+            </ActionButtons>
           </FormRow>
 
+          {/* Other Inputs */}
           <FormRow>
             <InputGroup>
               <Label>First Name</Label>
@@ -177,6 +199,7 @@ const ProfilePage = () => {
                 value={userData.first_name}
                 onChange={(e) => handleInputChange("first_name", e.target.value)}
                 disabled={!editMode}
+                placeholder="First name"
               />
             </InputGroup>
 
@@ -186,43 +209,44 @@ const ProfilePage = () => {
                 value={userData.last_name}
                 onChange={(e) => handleInputChange("last_name", e.target.value)}
                 disabled={!editMode}
+                placeholder="Last name"
               />
             </InputGroup>
           </FormRow>
 
           <FormRow>
             <InputGroup>
-              <Label>Email</Label>
-              <Input
-                value={userData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-                disabled={!editMode}
-              />
+              <Label>Email Address</Label>
+              <InputWrapper>
+                <IconWrapper>
+                  <FiMail size={18} />
+                </IconWrapper>
+                <Input
+                  type="email"
+                  value={userData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  disabled={!editMode}
+                  placeholder="your.email@example.com"
+                />
+              </InputWrapper>
             </InputGroup>
-          </FormRow>
 
-          <FormRow>
             <InputGroup>
               <Label>Password</Label>
-              <Input
-                type="password"
-                value={userData.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
-                disabled={!editMode}
-              />
+              <InputWrapper>
+                <IconWrapper>
+                  <FiLock size={18} />
+                </IconWrapper>
+                <Input
+                  type="password"
+                  value={userData.password}
+                  onChange={(e) => handleInputChange("password", e.target.value)}
+                  disabled={!editMode}
+                  placeholder="••••••••"
+                />
+              </InputWrapper>
             </InputGroup>
           </FormRow>
-
-          {editMode && (
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
-              <SaveButton onClick={handleSave}>
-                <FiUser /> Save Changes
-              </SaveButton>
-              <SaveButton onClick={() => setEditMode(false)} style={{ background: "#6c757d" }}>
-                Cancel
-              </SaveButton>
-            </div>
-          )}
         </FormContainer>
       </Content>
     </DashboardContainer>

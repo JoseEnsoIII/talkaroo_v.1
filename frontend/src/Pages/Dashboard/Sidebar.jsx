@@ -109,7 +109,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
       <LogoContainer>
-  <h1>{!collapsed && 'Talkaroo'}</h1>
+  <a href='/'><h1>{!collapsed && 'Talkaroo'}</h1></a>
 </LogoContainer>
       
       <Menu

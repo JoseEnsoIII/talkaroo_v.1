@@ -80,7 +80,7 @@ function App() {
         <Route path="/dashboard/settings" element={<User_Settings />} />
 
 
-        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/users" element={<Users />} />
         
         {/* Admin Routes */}
         <Route path="/admin-login" element={<AdminLogin />} />
