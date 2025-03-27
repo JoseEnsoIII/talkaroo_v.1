@@ -22,13 +22,15 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.2",
     "node-cron": "^3.0.3",
     "openai": "^4.88.0",
     "pg": "^8.14.1",
     "pg-hstore": "^2.3.4",
     "punycode": "^2.3.1",
     "react-hook-form": "^7.54.2",
-    "sequelize": "^6.37.6"
+    "sequelize": "^6.37.6",
+    "styled-components": "^6.1.16"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

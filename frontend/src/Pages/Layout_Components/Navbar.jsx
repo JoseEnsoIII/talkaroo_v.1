@@ -94,6 +94,8 @@ const NavContainer = styled.nav`
   background: #ffffff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
+  position: sticky; top: 0;
+   z-index: 1000;
 `;
 
 const Logo = styled(Link)`

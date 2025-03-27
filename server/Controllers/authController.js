@@ -35,8 +35,8 @@ const registerUser = async (req, res) => {
       [username, email, hashedPassword, role]
     );
 
-    console.log("User registered successfully!");
-    res.status(201).json({ message: "User registered successfully!", user: newUser.rows[0] });
+    // Now only return the response
+    res.status(201).json({ message: "User registered successfully!" });
   } catch (error) {
     console.error("Error in registerUser:", error);
     res.status(500).json({ error: "Internal server error" });

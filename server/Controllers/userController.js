@@ -4,10 +4,20 @@ const bcrypt = require("bcryptjs");
 // Get all users
 const getUsers = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM users ORDER BY id");
-    res.json(result.rows);
+    const { rows } = await pool.query(`
+      SELECT 
+        id, 
+        username, 
+        email, 
+        created_at, 
+        first_name, 
+        last_name, 
+        enrolled_course_name 
+      FROM users
+    `);
+    res.json(rows);
   } catch (err) {
-    console.error("Error fetching users:", err.message);
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 };

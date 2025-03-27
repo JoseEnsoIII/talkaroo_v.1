@@ -6,8 +6,8 @@ const authRoutes = require("./routes/authRoutes");
 const courseRoutes = require("./routes/courses");
 const enrollRoutes = require("./routes/enrollRoutes");
 const chatRoutes = require("./routes/chatRoutes");
-
-const feedbackRoutes = require('./routes/feedbackRoutes');
+const blogRoutes = require("./routes/blogRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 
 const app = express();
 
@@ -19,10 +19,10 @@ app.use(express.json());
 app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
-app.use("/api/enroll", enrollRoutes); // Register enrollment routes
+app.use("/api/enroll", enrollRoutes);
 app.use("/api/chat", chatRoutes);
-
-app.use('/api/feedback', feedbackRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5001;
