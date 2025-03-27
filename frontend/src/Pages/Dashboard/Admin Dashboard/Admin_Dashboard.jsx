@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FiUsers, FiBook, FiDollarSign, FiActivity } from "react-icons/fi";
-import Sidebar from "../Sidebar";
+import AdminSidebar from "../Admin-Sidebar";
+import DashboardBanner from "../../Layout_Components/Dashboard_Banner";
 // Add new styled components
 const DashboardContainer = styled.div`
   display: flex;
@@ -112,36 +113,50 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    // Mock data - replace with actual API calls
-    const mockData = {
-      users: 2458,
-      newUsers: 154,
-      courses: 42,
-      revenue: 12540.50,
-      userGrowth: [
-        { month: 'Jan', users: 400 },
-        { month: 'Feb', users: 800 },
-        { month: 'Mar', users: 1200 },
-        { month: 'Apr', users: 1600 },
-        { month: 'May', users: 2000 },
-        { month: 'Jun', users: 2458 },
-      ],
-      recentUsers: [
-        { id: 1, name: 'John Doe', email: 'john@example.com', joined: '2024-02-15' },
-        { id: 2, name: 'Jane Smith', email: 'jane@example.com', joined: '2024-02-14' },
-        { id: 3, name: 'Mike Johnson', email: 'mike@example.com', joined: '2024-02-13' },
-      ]
+    const fetchDashboardData = async () => {
+      try {
+        // Fetch users data
+        const usersResponse = await fetch('/api/users');
+        const usersData = await usersResponse.json();
+  
+        // Calculate new users (last 30 days)
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const newUsers = usersData.filter(user => 
+          new Date(user.created_at) >= thirtyDaysAgo
+        ).length;
+  
+        // Transform users data for table
+        const recentUsers = usersData.map(user => ({
+          id: user.id,
+          name: [user.first_name, user.last_name].filter(Boolean).join(' ') || user.username,
+          email: user.email,
+          joined: user.created_at,
+          enrolled: !!user.enrolled_course_name,
+          enrolled_course_name: user.enrolled_course_name || 'N/A'
+        })).sort((a, b) => new Date(b.joined) - new Date(a.joined));
+  
+        setDashboardData(prev => ({
+          ...prev,
+          users: usersData.length,
+          newUsers,
+          recentUsers
+        }));
+  
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
-    setDashboardData(mockData);
+  
+    fetchDashboardData();
   }, []);
 
   return (
     <DashboardContainer>
-      <Sidebar />
+      <AdminSidebar />
       <Content>
-        <Header>
-          <h1>Admin Dashboard</h1>
-        </Header>
+        <DashboardBanner />
+       
 
         <AnalyticsGrid>
           <AnalyticsCard>
@@ -202,30 +217,33 @@ const AdminDashboard = () => {
             </LineChart>
           </ResponsiveContainer>
         </ChartContainer>
-
         <ChartContainer>
-          <h3>Recent Signups</h3>
-          <RecentActivityTable>
-            <TableHeader>
-              <tr>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Join Date</TableCell>
-              </tr>
-            </TableHeader>
-            <tbody>
-              {dashboardData.recentUsers.map(user => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    {new Date(user.joined).toLocaleDateString()}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </tbody>
-          </RecentActivityTable>
-        </ChartContainer>
+  <h3>New Enrollees</h3>
+  <RecentActivityTable>
+  <TableHeader>
+    <tr>
+      <TableCell>Name</TableCell>
+      <TableCell>Email</TableCell>
+      <TableCell>Join Date</TableCell>
+      <TableCell>Enrollment Status</TableCell>
+      <TableCell>Enrolled Course</TableCell>
+    </tr>
+  </TableHeader>
+  <tbody>
+    {dashboardData.recentUsers.map(user => (
+      <TableRow key={user.id}>
+        <TableCell>{user.name}</TableCell>
+        <TableCell>{user.email}</TableCell>
+        <TableCell>{new Date(user.joined).toLocaleDateString()}</TableCell>
+        <TableCell>{user.enrolled ? 'Enrolled' : 'Not Enrolled'}</TableCell>
+        <TableCell>{user.enrolled_course_name}</TableCell>
+      </TableRow>
+    ))}
+  </tbody>
+</RecentActivityTable>
+</ChartContainer>
+
+
       </Content>
     </DashboardContainer>
   );

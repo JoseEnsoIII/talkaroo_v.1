@@ -116,24 +116,25 @@ const ProfilePage = () => {
     first_name: "",
     last_name: "",
     email: "",
-    password: "",
   });
 
   const [editMode, setEditMode] = useState(false);
+  const [newPassword, setNewPassword] = useState(""); // Password is handled separately
   const userId = 1;
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
-        setUserData(response.data);
+        const { username, first_name, last_name, email } = response.data;
+        setUserData({ username, first_name, last_name, email });
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-  }, [userId]);
+  }, []);
 
   const handleInputChange = (field, value) => {
     setUserData((prev) => ({ ...prev, [field]: value }));
@@ -141,22 +142,23 @@ const ProfilePage = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/users/${userId}`, userData);
+      const updatedData = { ...userData };
+      if (newPassword) updatedData.password = newPassword;
+
+      await axios.patch(`http://localhost:5000/api/users/${userId}`, updatedData);
       setEditMode(false);
+      setNewPassword(""); // Reset password field after update
     } catch (error) {
-      console.error("Error saving data:", error);
+      console.error("Error updating user profile:", error);
     }
   };
 
   return (
     <DashboardContainer>
       <Sidebar />
-
       <Content>
         <DashboardBanner />
-
         <FormContainer>
-          {/* Username Input with Action Buttons on the Right */}
           <FormRow>
             <InputGroup>
               <Label>Username</Label>
@@ -172,7 +174,6 @@ const ProfilePage = () => {
                 />
               </InputWrapper>
             </InputGroup>
-
             <ActionButtons>
               {editMode ? (
                 <>
@@ -191,7 +192,6 @@ const ProfilePage = () => {
             </ActionButtons>
           </FormRow>
 
-          {/* Other Inputs */}
           <FormRow>
             <InputGroup>
               <Label>First Name</Label>
@@ -232,15 +232,15 @@ const ProfilePage = () => {
             </InputGroup>
 
             <InputGroup>
-              <Label>Password</Label>
+              <Label>New Password</Label>
               <InputWrapper>
                 <IconWrapper>
                   <FiLock size={18} />
                 </IconWrapper>
                 <Input
                   type="password"
-                  value={userData.password}
-                  onChange={(e) => handleInputChange("password", e.target.value)}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   disabled={!editMode}
                   placeholder="••••••••"
                 />

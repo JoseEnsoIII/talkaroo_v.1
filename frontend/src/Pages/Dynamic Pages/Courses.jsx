@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Pagination from '../Layout_Components/Pagination'; // Import Pagination component
+import Pagination from '../Layout_Components/Pagination';
 import Chatbot from '../Layout_Components/Floating_Chatbot';
 
 const Container = styled.div`
@@ -90,13 +90,12 @@ const LevelBadge = styled.span`
   background: ${props => {
     if (props.level === 'expert') return '#f56565';
     if (props.level === 'intermediate') return '#ecc94b';
-    return '#48bb78'; // free
+    return '#48bb78';
   }};
   color: white;
   margin-top: 0.5rem;
-  margin-right: 0.25rem; /* Small gap between badges */
+  margin-right: 0.25rem;
 `;
-
 
 const LanguageCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -109,21 +108,13 @@ const LanguageCourses = () => {
     const fetchCourses = async () => {
       try {
         const response = await fetch('http://localhost:5001/api/courses');
-        const text = await response.text();
-        console.log("Raw Response:", text);
-        const data = JSON.parse(text).map(course => ({
-          ...course,
-          course_price: parseFloat(course.course_price),
-        }));
-
-        // Filter out duplicate languages by course_name
-        const uniqueCourses = data.filter((value, index, self) =>
-          index === self.findIndex((t) => t.course_name === value.course_name)
-        );
-
-        setCourses(uniqueCourses);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched courses:", data); // Debugging line
+        setCourses(data);
       } catch (err) {
-        console.error("Fetch error:", err.message);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -133,7 +124,6 @@ const LanguageCourses = () => {
     fetchCourses();
   }, []);
 
-  // Pagination logic
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
@@ -145,36 +135,39 @@ const LanguageCourses = () => {
   return (
     <Container>
       <h1>Language Courses</h1>
-
       <CourseGrid>
         {currentCourses.map(course => (
-          <Link key={course.course_id} to={`/enroll/${course.course_id}`}>
+         <Link key={course.course_id} to={`/enroll/${course.course_id}`}>
             <CourseCard>
               <CourseHeader>
-                <Flag src={course.flag_url} alt={`${course.course_name} flag`} />
+                {console.log("Course flag URL:", course.country_flag)}
+                <Flag 
+                  src={course.country_flag || 'https://via.placeholder.com/40x25'} 
+                  alt={`${course.course_name} flag`} 
+                  crossOrigin="anonymous"
+                  onLoad={() => console.log(`${course.course_name} flag loaded`)}
+                  onError={(e) => {
+                    console.error("Flag image failed for", course.course_name, course.country_flag);
+                    e.target.src = 'https://via.placeholder.com/40x25';
+                  }}
+                />
                 <TitleWrapper>
                   <CourseTitle>{course.course_name}</CourseTitle>
-                  <NativeTitle>{course.native_name}</NativeTitle>
+                  <NativeTitle>{course.native_name || 'Unknown'}</NativeTitle>
                 </TitleWrapper>
               </CourseHeader>
-
               <Description>{course.description}</Description>
-
-              <Price>{isNaN(course.course_price) ? 'N/A' : course.course_price.toFixed(2)}</Price>
-
-              <LevelBadge level="free">Free</LevelBadge>
-                <LevelBadge level="intermediate">Intermediate</LevelBadge>
-                <LevelBadge level="expert">Advanced</LevelBadge> 
+              <Price>{course.course_price ? course.course_price.toFixed(2) : 'FREE'}</Price>
+              {course.levels.map(level => (
+                <LevelBadge key={level.level} level={level.level.toLowerCase()}>
+                  {level.level}
+                </LevelBadge>
+              ))}
             </CourseCard>
           </Link>
         ))}
       </CourseGrid>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
       <Chatbot />
     </Container>
   );

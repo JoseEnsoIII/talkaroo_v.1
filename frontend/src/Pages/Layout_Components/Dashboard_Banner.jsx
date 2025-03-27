@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 
 const BannerContainer = styled.div`
   width: 95%;
-  max-width: 100vw; /* Match the course page width */
+  max-width: 100vw;
   background: white;
-  color: white;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -16,12 +15,14 @@ const BannerContainer = styled.div`
   border-radius: 8px;
   margin: 1rem auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  // Remove the color: white here as it was affecting all child elements
 `;
 
 const BannerTitle = styled.h2`
   margin: 0;
   font-size: 1.5rem;
   text-align: left;
+  color: #2c3e50; // Add text color
 `;
 
 const NotificationWrapper = styled.div`
@@ -32,6 +33,12 @@ const NotificationIcon = styled.div`
   font-size: 1.5rem;
   cursor: pointer;
   position: relative;
+  color: #2c3e50; // Add explicit color
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #1890ff;
+  }
 `;
 
 const NotificationBadge = styled.span`
@@ -90,10 +97,23 @@ const NotificationDate = styled.span`
 `;
 
 const pageTitles = {
+  // Client Dashboard
   "/dashboard": "Welcome to Your Dashboard",
   "/dashboard/my-courses": "My Courses",
   "/dashboard/profile": "Profile",
-  "/settings": "Settings",
+  "/dashboard/settings": "Settings",
+  "/dashboard/certificate": "Certificate",
+  "/dashboard/notification": "Notifications",
+
+  // Admin Dashboard
+  "/admin": "Admin Dashboard",
+  "/admin/users": "Admin Users",
+  "/admin/courses": "Admin Courses",
+  "/admin/course-activities": "Admin Course Activities",
+  "/admin/notification": "Admin Notifications",
+  "/admin/blog" : "Admin Blogs",
+  "/admin/feedback": "Admin Feedback",
+  "/admin/settings": "Admin Settings"
 };
 
 const DashboardBanner = () => {

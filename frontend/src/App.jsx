@@ -13,8 +13,12 @@ import AdminLogin from "./Pages/Auth/Admin_login";
 
 // Admin Pages
 import AdminDashboard from "./Pages/Dashboard/Admin Dashboard/Admin_Dashboard";
-import AdminUsers from "./Pages/Dashboard/Dashboard_Pages/Dashboard_Users";
-
+import AdminUsers from "./Pages/Dashboard/Admin Dashboard/Admin_Users";
+import AdminCourse from "./Pages/Dashboard/Admin Dashboard/Admin_Course";
+import AdminActivities from "./Pages/Dashboard/Admin Dashboard/Admin_Activities";
+import AdminNotifications from "./Pages/Dashboard/Admin Dashboard/Admin_Notifications";
+import AdminSettings from "./Pages/Dashboard/Admin Dashboard/Admin_Settings";
+import AdminFeedback from "./Pages/Dashboard/Admin Dashboard/Admin_Feedback";
 // Client Pages | Dashboard
 import ClientDashboard from "./Pages/Dashboard/Client Dashboard/Client_Dashboard";
 import ClientProfile from "./Pages/Dashboard/Client Dashboard/Profile"
@@ -45,6 +49,7 @@ import Feedback from "./Components/compo/compo-pages/Feedback";
 
 // Protected Route
 import ProtectedRoute from "./Components/ProtectedRoute";
+import AdminBlogDashboard from "./Pages/Dashboard/Admin Dashboard/Admin_Blog";
 
 function App() {
   // Notifications state
@@ -59,8 +64,10 @@ function App() {
         <Route path="/contact-us" element={<><Navbar /><ContactUs /><Footer /></>} />
         <Route path="/privacy-policy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
         <Route path="/terms-of-service" element={<><Navbar /><TermsOfService /><Footer /></>} />
+        {/* auth */}
         <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
         <Route path="/signup" element={<><Navbar /><SignUp /><Footer /></>} />
+        {/* Dynamic pages */}
         <Route path="/community" element={<><Navbar /><Community /><Footer /></>} />
         <Route path="/vocabulary" element={<><Navbar /><Vocabulary /><Footer /></>} />
         <Route path="/grammar" element={<><Navbar /><Grammar /><Footer /></>} />
@@ -84,8 +91,14 @@ function App() {
         
         {/* Admin Routes */}
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/dashboard/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+<Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+<Route path="/admin/courses" element={<ProtectedRoute><AdminCourse /></ProtectedRoute>} />
+<Route path="/admin/course-activities" element={<ProtectedRoute><AdminActivities /></ProtectedRoute>} />
+<Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+<Route path="/admin/notification" element={<ProtectedRoute><AdminNotifications /></ProtectedRoute>} />
+<Route path="/admin/feedback" element={<ProtectedRoute><AdminFeedback /></ProtectedRoute>} />
+<Route path="/admin/blog" element={<ProtectedRoute><AdminBlogDashboard /></ProtectedRoute>} />
+<Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
 
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />

@@ -78,21 +78,21 @@ const AboutPage = () => {
   <SectionTitle>What Our Learners Say</SectionTitle>
   <TestimonialGrid>
     <TestimonialCard>
-      <Avatar src="https://via.placeholder.com/150" />
+      <Avatar src="#" />
       <QuoteText>"Talkaroo's immersive approach helped me become conversational in Spanish in just 3 months. The native speaker conversations are invaluable!"</QuoteText>
       <MemberName>Sarah Johnson</MemberName>
       <MemberLanguage>Spanish Learner • USA</MemberLanguage>
     </TestimonialCard>
 
     <TestimonialCard>
-      <Avatar src="https://via.placeholder.com/150" />
+      <Avatar src="#" />
       <QuoteText>"I never thought I could learn Mandarin, but the structured lessons and cultural insights made it enjoyable and effective."</QuoteText>
       <MemberName>Michael Chen</MemberName>
       <MemberLanguage>Mandarin Learner • Australia</MemberLanguage>
     </TestimonialCard>
 
     <TestimonialCard>
-      <Avatar src="https://via.placeholder.com/150" />
+      <Avatar src="#" />
       <QuoteText>"The mobile app lets me practice French daily during my commute. I've progressed faster than with traditional classes!"</QuoteText>
       <MemberName>Élodie Rousseau</MemberName>
       <MemberLanguage>French Learner • UK</MemberLanguage>
