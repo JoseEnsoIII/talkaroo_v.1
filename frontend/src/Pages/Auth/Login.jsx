@@ -153,7 +153,7 @@ const LoginForm = () => {
           <p>Sign in to continue your journey with us</p>
           <img
             src="https://source.unsplash.com/random/800x600?nature"
-            alt="Decorative"
+            alt=""
           />
           <Separator>
             <span style={{ color: "white" }}>OR</span>

@@ -14,6 +14,12 @@ const pulse = keyframes`
 const Container = styled.div`
   display: flex;
   height: 80vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -21,6 +27,10 @@ const LeftContainer = styled.div`
   background-image: url('https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmVnaXN0cmF0aW9ufGVufDB8fDB8fHww');
   background-size: cover;
   background-position: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const RightContainer = styled.div`
@@ -29,6 +39,12 @@ const RightContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f4f4f4;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
 `;
 
 const FormWrapper = styled.div`
@@ -37,11 +53,21 @@ const FormWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   width: 350px;
+  max-width: 90%;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+  }
 `;
 
 const Title = styled.h2`
   text-align: center;
   margin-bottom: 1rem;
+  font-size: 1.8rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Input = styled.input`
@@ -57,6 +83,11 @@ const Input = styled.input`
     border-color: #007bff;
     outline: none;
   }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 8px;
+  }
 `;
 
 const Button = styled.button`
@@ -69,6 +100,7 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 16px;
   transition: background 0.3s ease;
+  min-height: 44px;
 
   &:hover {
     background: #0056b3;
@@ -78,12 +110,21 @@ const Button = styled.button`
     background: #cccccc;
     cursor: not-allowed;
   }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 8px;
+  }
 `;
 
 const ErrorMessage = styled.p`
   color: red;
   text-align: center;
   font-size: 14px;
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
 const PasswordStrength = styled.div`
@@ -94,6 +135,10 @@ const PasswordStrength = styled.div`
   margin: 5px 0;
   position: relative;  
   overflow: hidden;
+
+  @media (max-width: 480px) {
+    height: 4px;
+  }
 `;
 
 const StrengthBar = styled.div`
@@ -109,9 +154,14 @@ const PolicyList = styled.ul`
   color: #666;
   padding-left: 15px;
   margin: 5px 0;
+  line-height: 1.4;
+
+  @media (max-width: 480px) {
+    font-size: 11px;
+    padding-left: 10px;
+  }
 `;
 
-// Popup for registration success
 const Popup = styled.div`
   position: fixed;
   top: 50%;
@@ -123,6 +173,17 @@ const Popup = styled.div`
   border-radius: 10px;
   text-align: center;
   z-index: 1000;
+  width: 80%;
+  max-width: 300px;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const Overlay = styled.div`
@@ -138,6 +199,10 @@ const Overlay = styled.div`
 const ShowPasswordWrapper = styled.div`
   margin-top: 10px;
   text-align: left;
+
+  @media (max-width: 480px) {
+    margin-top: 8px;
+  }
 `;
 
 const RegisterForm = () => {
