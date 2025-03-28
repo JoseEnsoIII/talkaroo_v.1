@@ -5,15 +5,12 @@ import { FaShieldAlt, FaDatabase, FaUserLock } from 'react-icons/fa';
 const PrivacyPolicy = () => {
   return (
     <Container>
-      <Header>
-        <Title>Privacy Policy</Title>
-        <LastUpdated>Last Updated: January 1, 2024</LastUpdated>
-      </Header>
 
-      <Content>
+      <Content> <Title>Privacy Policy</Title>
+        <LastUpdated>Last Updated: MArch 28, 2025</LastUpdated>
         <Section>
           <SectionTitle>
-            <FaShieldAlt className="icon" />
+            <IconWrapper><FaShieldAlt /></IconWrapper>
             Introduction
           </SectionTitle>
           <Text>
@@ -24,32 +21,32 @@ const PrivacyPolicy = () => {
 
         <Section>
           <SectionTitle>
-            <FaDatabase className="icon" />
+            <IconWrapper><FaDatabase /></IconWrapper>
             Data Collection
           </SectionTitle>
           <Text>
             We may collect personal information that you voluntarily provide to us, including:
             <List>
-              <li>Name and contact information</li>
-              <li>Account credentials</li>
-              <li>Payment information</li>
-              <li>Usage data and analytics</li>
+              <ListItem>Name and contact information</ListItem>
+              <ListItem>Account credentials</ListItem>
+              <ListItem>Payment information</ListItem>
+              <ListItem>Usage data and analytics</ListItem>
             </List>
           </Text>
         </Section>
 
         <Section>
           <SectionTitle>
-            <FaUserLock className="icon" />
+            <IconWrapper><FaUserLock /></IconWrapper>
             Data Protection
           </SectionTitle>
           <Text>
             We implement security measures including:
             <List>
-              <li>SSL/TLS encryption</li>
-              <li>Regular security audits</li>
-              <li>Access controls</li>
-              <li>Data anonymization where possible</li>
+              <ListItem>SSL/TLS encryption</ListItem>
+              <ListItem>Regular security audits</ListItem>
+              <ListItem>Access controls</ListItem>
+              <ListItem>Data anonymization where possible</ListItem>
             </List>
           </Text>
         </Section>
@@ -66,28 +63,30 @@ const PrivacyPolicy = () => {
           <SectionTitle>Cookies</SectionTitle>
           <Text>
             We use cookies and similar tracking technologies to:
-            <CookieTable>
-              <thead>
-                <tr>
-                  <th>Purpose</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cookieData.map((cookie, index) => (
-                  <tr key={index}>
-                    <td>{cookie.purpose}</td>
-                    <td>{cookie.description}</td>
+            <CookieTableContainer>
+              <CookieTable>
+                <thead>
+                  <tr>
+                    <TableHeader>Purpose</TableHeader>
+                    <TableHeader>Description</TableHeader>
                   </tr>
-                ))}
-              </tbody>
-            </CookieTable>
+                </thead>
+                <tbody>
+                  {cookieData.map((cookie, index) => (
+                    <tr key={index}>
+                      <TableData>{cookie.purpose}</TableData>
+                      <TableData>{cookie.description}</TableData>
+                    </tr>
+                  ))}
+                </tbody>
+              </CookieTable>
+            </CookieTableContainer>
           </Text>
         </Section>
 
         <ContactSection>
-          <h3>Contact Us</h3>
-          <p>For privacy-related questions, contact us at:</p>
+          <ContactTitle>Contact Us</ContactTitle>
+          <ContactText>For privacy-related questions, contact us at:</ContactText>
           <ContactInfo>privacy@company.com</ContactInfo>
         </ContactSection>
       </Content>
@@ -101,18 +100,19 @@ const cookieData = [
   { purpose: 'Analytics', description: 'Understand service usage' },
 ];
 
+// Styled Components
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
-const Header = styled.div`
-  text-align: center;
-  margin-bottom: 3rem;
-`;
 
 const Title = styled.h1`
   font-size: 2.5rem;
@@ -121,11 +121,24 @@ const Title = styled.h1`
   background: linear-gradient(45deg, #2c3e50, #3498db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
+  }
 `;
 
 const LastUpdated = styled.p`
   color: #7f8c8d;
   font-size: 0.9rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Content = styled.div`
@@ -133,16 +146,31 @@ const Content = styled.div`
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 8px;
+  }
 `;
 
 const Section = styled.div`
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   padding: 1.5rem;
   border-radius: 8px;
   transition: background-color 0.2s;
 
   &:hover {
     background-color: #f9f9f9;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -153,9 +181,25 @@ const SectionTitle = styled.h2`
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  flex-wrap: wrap;
 
-  .icon {
-    color: #3498db;
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const IconWrapper = styled.span`
+  color: #3498db;
+  font-size: 1.2rem;
+  min-width: 30px;
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
   }
 `;
 
@@ -163,37 +207,69 @@ const Text = styled.p`
   line-height: 1.6;
   color: #555;
   margin-bottom: 1rem;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
 `;
 
 const List = styled.ul`
   margin: 1rem 0;
   padding-left: 1.5rem;
 
-  li {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
+  @media (max-width: 480px) {
+    padding-left: 1rem;
   }
+`;
+
+const ListItem = styled.li`
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  font-size: 0.95rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const CookieTableContainer = styled.div`
+  overflow-x: auto;
+  margin: 1.5rem 0;
 `;
 
 const CookieTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem 0;
-  overflow-x: auto;
+  min-width: 500px;
 
-  th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+  @media (max-width: 768px) {
+    min-width: 350px;
   }
+`;
 
-  th {
-    background-color: #f8f9fa;
-    font-weight: 600;
+const TableHeader = styled.th`
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #eee;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 0.9rem;
   }
+`;
 
-  tr:nth-child(even) {
-    background-color: #f8f9fa;
+const TableData = styled.td`
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 0.9rem;
   }
 `;
 
@@ -203,13 +279,43 @@ const ContactSection = styled.div`
   border-radius: 8px;
   text-align: center;
   margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+`;
+
+const ContactTitle = styled.h3`
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
+`;
+
+const ContactText = styled.p`
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ContactInfo = styled.div`
   font-weight: 600;
   color: #3498db;
-  margin-top: 0.5rem;
   font-size: 1.1rem;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 export default PrivacyPolicy;

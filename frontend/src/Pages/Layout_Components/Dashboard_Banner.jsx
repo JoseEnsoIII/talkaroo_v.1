@@ -113,7 +113,9 @@ const pageTitles = {
   "/admin/notification": "Admin Notifications",
   "/admin/blog" : "Admin Blogs",
   "/admin/feedback": "Admin Feedback",
-  "/admin/settings": "Admin Settings"
+  "/admin/settings": "Admin Settings",
+
+  "/admin/course-activities/vocabs" : "Admin Activity",
 };
 
 const DashboardBanner = () => {

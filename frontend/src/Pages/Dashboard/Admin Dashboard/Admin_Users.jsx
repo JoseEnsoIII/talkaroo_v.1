@@ -186,6 +186,7 @@ const UserTable = () => {
             <Th>Username</Th>
             <Th>Email</Th>
             <Th>Role</Th>
+            <Th>Course</Th>
             <Th>Actions</Th>
           </tr>
         </thead>
@@ -196,6 +197,7 @@ const UserTable = () => {
               <Td>{user.username}</Td>
               <Td>{user.email}</Td>
               <Td>{user.role}</Td>
+              <Td>{user.enrolled_course_name}</Td>
               <Td>
                 <Button onClick={() => handleEditUser(user)}>Edit</Button>
                 <Button onClick={() => handleDeleteUser(user.id)} style={{ backgroundColor: "#ff4d4f" }}>Delete</Button>

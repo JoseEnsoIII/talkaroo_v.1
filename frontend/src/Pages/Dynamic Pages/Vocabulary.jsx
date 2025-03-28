@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { FiVolume2, FiBookmark, FiCheckCircle } from 'react-icons/fi';
 import Pagination from '../Layout_Components/Pagination';
+import { Button } from '@mui/material';
+import { Book as BookIcon } from '@mui/icons-material';
 
 const VocabularyContainer = styled.div`
   max-width: 1200px;
@@ -14,6 +15,8 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 `;
 
 const SearchInput = styled.input`
@@ -55,41 +58,71 @@ const Card = styled.div`
   }
 `;
 
-const WordHeader = styled.div`
+const CardHeader = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1rem;
 `;
 
-const Word = styled.h2`
-  margin: 0;
-  color: #2d3748;
-  font-size: 1.5rem;
+const IconWrapper = styled.div`
+  background: #4a90e2;
+  border-radius: 8px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 `;
 
-const vocabularyItems = [
-  { id: 1, word: "Common Greetings" },
-  { id: 2, word: "Essential Travel Phrases" },
-  { id: 3, word: "Restaurant and Food Vocabulary" },
-  { id: 4, word: "Directions and Places in the City" },
-  { id: 5, word: "Numbers and Counting" },
-  { id: 6, word: "Shopping and Money" },
-  { id: 7, word: "Weather and Seasons" },
-  { id: 8, word: "Emergency and Medical Terms" },
-  { id: 9, word: "Basic Conversational Phrases" },
-  { id: 10, word: "Work and Office Vocabulary" },
-  { id: 11, word: "Transportation Terms" },
-  { id: 12, word: "Technology and Internet Vocabulary" }
-];
+const Word = styled.h3`
+  margin: 0;
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-weight: 600;
+`;
+
+const Description = styled.p`
+  color: #718096;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem 0;
+  flex-grow: 1;
+`;
 
 const VocabularyPage = () => {
+  const [vocabularyItems, setVocabularyItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const itemsPerPage = 9;
 
+  // Fetch vocabulary (only from course_id=1)
+  const fetchVocabulary = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(`http://localhost:5001/api/vocabulary?course_id=1`);
+      if (!response.ok) throw new Error('Failed to fetch vocabulary');
+      
+      const data = await response.json();
+      setVocabularyItems(data.data);
+    } catch (error) {
+      console.error('Error fetching vocabulary:', error);
+      setError('Failed to load vocabulary.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchVocabulary();
+  }, [fetchVocabulary]);
+
   const filteredItems = vocabularyItems.filter(item =>
-    item.word.toLowerCase().includes(searchQuery.toLowerCase())
+    item.vocab_title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -108,22 +141,43 @@ const VocabularyPage = () => {
         />
       </Header>
 
-      <Grid>
-        {currentItems.map(item => (
-          <Card key={item.id}>
-            <WordHeader>
-              <Word>{item.word}</Word>
-            </WordHeader>
-          </Card>
-        ))}
-      </Grid>
+      {loading ? (
+        <p>Loading vocabulary...</p>
+      ) : error ? (
+        <p style={{ color: 'red' }}>{error}</p>
+      ) : (
+        <>
+          <Grid>
+            {currentItems.map(item => (
+              <Card key={item.vocab_id}>
+                <div>
+                  <CardHeader>
+                    <IconWrapper>
+                      <BookIcon fontSize="small" />
+                    </IconWrapper>
+                    <Word>{item.vocab_title}</Word>
+                  </CardHeader>
+                  <Description>{item.vocab_title_description}</Description>
+                </div>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  fullWidth
+                  sx={{ textTransform: 'none', borderRadius: '8px' }}
+                >
+                  Practice Now
+                </Button>
+              </Card>
+            ))}
+          </Grid>
 
-      <Pagination
-  currentPage={currentPage}
-  totalPages={Math.ceil(filteredItems.length / itemsPerPage)}
-  onPageChange={setCurrentPage}
-/>
-
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(filteredItems.length / itemsPerPage)}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
     </VocabularyContainer>
   );
 };

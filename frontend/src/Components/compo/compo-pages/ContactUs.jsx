@@ -1,293 +1,266 @@
-import { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import { FiCheckCircle, FiGlobe, FiMail, FiMessageSquare } from "react-icons/fi";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { FaEnvelope, FaUser, FaPhone } from "react-icons/fa";
 
-const gradientBackground = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
 
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validate = () => {
+    let newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Valid email is required";
+    if (!formData.phone.trim() || !/^\d+$/.test(formData.phone))
+      newErrors.phone = "Valid phone number is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      alert("Form submitted successfully!");
+      setFormData({ name: "", email: "", phone: "" });
+      setErrors({});
+    }
+  };
+
+  return (
+    <Container>
+      <LeftSection>
+        <BackgroundImage />
+        <Content>
+          <MainTitle>Get in Touch</MainTitle>
+          <SubTitle>We're here to help you 24/7</SubTitle>
+        </Content>
+      </LeftSection>
+      <RightSection>
+        <FormContainer>
+          <FormTitle>Contact Form</FormTitle>
+          <Form onSubmit={handleSubmit}>
+            <InputGroup>
+              <FaUser />
+              <StyledInput
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </InputGroup>
+            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+
+            <InputGroup>
+              <FaEnvelope />
+              <StyledInput
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </InputGroup>
+            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+
+            <InputGroup>
+              <FaPhone />
+              <StyledInput
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </InputGroup>
+            {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+
+            <SubmitButton type="submit">Send Message</SubmitButton>
+          </Form>
+        </FormContainer>
+      </RightSection>
+    </Container>
+  );
+};
+
+// Styled Components
 const Container = styled.div`
   display: flex;
-  min-height: 100vh;
-  padding: 2rem;
-   background: linear-gradient(135deg, #4A90E2 0%, #6C5CE7 100%);
-  background-size: 400% 400%;
-  animation: ${gradientBackground} 15s ease infinite;
-`;
-
-const FormCard = styled.div`
+  min-height: 80vh;
   width: 100%;
-  max-width: 500px;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg, #4A90E2 0%, #6C5CE7 100%);
+  border-image-slice: 1;
 
-  &:hover {
-    transform: translateY(-5px);
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
-const Title = styled.h1`
-  font-size: 2.5rem;
-  color: #2d3748;
+const LeftSection = styled.div`
+  flex: 1;
+  position: relative;
+  background: #f0f4f8;
+  min-height: 300px;
+
+  @media (max-width: 768px) {
+    flex: none;
+    width: 100%;
+  }
+`;
+
+const BackgroundImage = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1586769852044-692d6e3703f0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNvbnRhY3QlMjB1c3xlbnwwfHwwfHx8MA%3D%3D') center/cover;
+  opacity: 0.9;
+`;
+
+const Content = styled.div`
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
+const MainTitle = styled.h1`
+  font-size: 2.5rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+const SubTitle = styled.p`
+  font-size: 1.2rem;
+  opacity: 0.9;
+  color: black;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const RightSection = styled.div`
+  flex: 1;
+  background: linear-gradient(135deg, #4A90E2 0%, #6C5CE7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  padding: 2rem;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+
+  @media (max-width: 768px) {
+    flex: none;
+    width: 100%;
+    min-height: 100vh;
+    padding: 3rem 1rem;
+  }
 `;
 
-const Description = styled.p`
-  text-align: center;
-  color: #718096;
+const FormContainer = styled.div`
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+  }
+`;
+
+
+const FormTitle = styled.h2`
+  font-size: 1.8rem;
+  color: #2d3748;
   margin-bottom: 2rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
-const SuccessMessage = styled.div`
-  padding: 1rem;
-  background: #f0fff4;
-  border: 1px solid #68d391;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const InputGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  color: #2f855a;
-`;
+  padding: 0.8rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 100%;
 
-const InputContainer = styled.div`
-  margin-bottom: 1.5rem;
-`;
+  svg {
+    color: #4a5568;
+  }
 
-const InputLabel = styled.label`
-  display: block;
-  color: #4a5568;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  @media (max-width: 480px) {
+    padding: 0.6rem;
+  }
 `;
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 1rem;
-  border: 2px solid ${props => props.error ? "#fc8181" : "#e2e8f0"};
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-
-  &:focus {
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
-    outline: none;
-  }
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  padding: 0.3rem 0;
 
   &::placeholder {
     color: #a0aec0;
   }
 `;
 
-const StyledTextarea = styled.textarea`
-  width: 100%;
-  padding: 1rem;
-  border: 2px solid ${props => props.error ? "#fc8181" : "#e2e8f0"};
-  border-radius: 10px;
-  font-size: 1rem;
-  resize: vertical;
-  min-height: 120px;
-  transition: all 0.3s ease;
-
-  &:focus {
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
-    outline: none;
-  }
-`;
-
-const ErrorMessage = styled.span`
-  color: #e53e3e;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-  display: block;
-`;
-
 const SubmitButton = styled.button`
-  width: 100%;
-  padding: 1rem;
-   background: linear-gradient(135deg, #4A90E2 0%, #6C5CE7 100%);
+  background: #4a90e2;
   color: white;
+  padding: 0.8rem;
   border: none;
-  border-radius: 10px;
-  font-size: 1rem;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+    background: #357abd;
+    transform: translateY(-1px);
   }
 `;
 
-const LoadingSpinner = styled.div`
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s linear infinite;
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.85rem;
+  margin-top: -0.8rem;
 `;
 
-const ContactUs = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (success) {
-      const timer = setTimeout(() => setSuccess(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [success]);
-
-  const validateField = (name, value) => {
-    let error = "";
-    if (!value.trim()) error = `${name} is required`;
-    if (name === "email" && value.trim() && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "Invalid email address";
-    }
-    setErrors((prev) => ({ ...prev, [name]: error }));
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    validateField(name, value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    Object.keys(formData).forEach((key) => validateField(key, formData[key]));
-    if (Object.values(errors).some((error) => error) || Object.values(formData).some((v) => !v.trim())) return;
-
-    setIsSubmitting(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setSuccess("Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
-      setErrors({});
-    } catch {
-      setErrors({ api: "Failed to send message. Please try again." });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
- return (
-    <Container>
-      <FormCard>
-        <Title>
-          <FiGlobe size="1.2em" />
-          Contact Us
-        </Title>
-        <Description>
-          Have questions about language courses or need learning resources? We're here to help!
-        </Description>
-
-        {success && (
-          <SuccessMessage>
-            <FiCheckCircle size="1.2em" />
-            {success}
-          </SuccessMessage>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <InputContainer>
-            <InputLabel>
-              <FiMail />
-              Full Name
-            </InputLabel>
-            <StyledInput
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-              error={errors.name}
-              disabled={isSubmitting}
-            />
-            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-          </InputContainer>
-
-          <InputContainer>
-            <InputLabel>
-              <FiMail />
-              Email Address
-            </InputLabel>
-            <StyledInput
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your@email.com"
-              error={errors.email}
-              disabled={isSubmitting}
-            />
-            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-          </InputContainer>
-
-          <InputContainer>
-            <InputLabel>
-              <FiMessageSquare />
-              Your Message
-            </InputLabel>
-            <StyledTextarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Type your message here..."
-              error={errors.message}
-              disabled={isSubmitting}
-            />
-            {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
-          </InputContainer>
-
-          <SubmitButton type="submit" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <LoadingSpinner />
-                Sending...
-              </>
-            ) : (
-              "Send Message"
-            )}
-          </SubmitButton>
-        </form>
-      </FormCard>
-    </Container>
-  );
-};
-
-export default ContactUs;
+export default ContactForm;

@@ -19,6 +19,7 @@ import AdminActivities from "./Pages/Dashboard/Admin Dashboard/Admin_Activities"
 import AdminNotifications from "./Pages/Dashboard/Admin Dashboard/Admin_Notifications";
 import AdminSettings from "./Pages/Dashboard/Admin Dashboard/Admin_Settings";
 import AdminFeedback from "./Pages/Dashboard/Admin Dashboard/Admin_Feedback";
+// Admin Sub Pages
 // Client Pages | Dashboard
 import ClientDashboard from "./Pages/Dashboard/Client Dashboard/Client_Dashboard";
 import ClientProfile from "./Pages/Dashboard/Client Dashboard/Profile"
@@ -53,7 +54,7 @@ import AdminBlogDashboard from "./Pages/Dashboard/Admin Dashboard/Admin_Blog";
 
 function App() {
   // Notifications state
-  
+
 
   return (
     <Router>
@@ -88,18 +89,18 @@ function App() {
 
 
         <Route path="/users" element={<Users />} />
-        
+
         {/* Admin Routes */}
         <Route path="/admin-login" element={<AdminLogin />} />
-<Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-<Route path="/admin/courses" element={<ProtectedRoute><AdminCourse /></ProtectedRoute>} />
-<Route path="/admin/course-activities" element={<ProtectedRoute><AdminActivities /></ProtectedRoute>} />
-<Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
-<Route path="/admin/notification" element={<ProtectedRoute><AdminNotifications /></ProtectedRoute>} />
-<Route path="/admin/feedback" element={<ProtectedRoute><AdminFeedback /></ProtectedRoute>} />
-<Route path="/admin/blog" element={<ProtectedRoute><AdminBlogDashboard /></ProtectedRoute>} />
-<Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
-
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/courses" element={<ProtectedRoute><AdminCourse /></ProtectedRoute>} />
+        <Route path="/admin/course-activities" element={<ProtectedRoute><AdminActivities /></ProtectedRoute>} />
+        <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+        <Route path="/admin/notification" element={<ProtectedRoute><AdminNotifications /></ProtectedRoute>} />
+        <Route path="/admin/feedback" element={<ProtectedRoute><AdminFeedback /></ProtectedRoute>} />
+        <Route path="/admin/blog" element={<ProtectedRoute><AdminBlogDashboard /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+        {/* Admin Subpagess */}
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
