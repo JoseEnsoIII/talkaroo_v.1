@@ -184,3 +184,38 @@
   .pulse-effect {
     animation: pulse-indigo 2s infinite;
   }
+  @media (forced-colors: active) {
+    * {
+        forced-color-adjust: none;
+    }
+
+    body {
+        background-color: Canvas;
+        color: CanvasText;
+    }
+
+    a {
+        color: LinkText;
+    }
+
+    a:visited {
+        color: VisitedText;
+    }
+
+    button, .button {
+        background-color: ButtonFace;
+        color: ButtonText;
+        border: 2px solid ButtonBorder;
+    }
+
+    input, textarea {
+        background-color: Field;
+        color: FieldText;
+        border: 2px solid ButtonBorder;
+    }
+
+    :focus {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+    }
+}

@@ -6,93 +6,85 @@ import Contact from "../../Components/compo/compo-pages/ContactUs";
 
 // Styled Components
 const Container = styled.div`
-  background: url("/images/language.jpg") no-repeat center center;
-  background-size: cover;
+  background: url("/images/language.jpg") no-repeat center center/cover;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
+  min-height: clamp(35vh, 50vh, 60vh);
   text-align: center;
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   width: 100%;
+  position: relative;
   
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-    min-height: 40vh;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
   }
+`;
 
-  @media (max-width: 480px) {
-    min-height: 35vh;
-  }
+const ContentWrapper = styled.div`
+  position: relative;
+  z-index: 1;
+  max-width: min(90%, 1200px);
+  width: 100%;
+  text-align: center; /* Add text alignment */
 `;
 
 const Heading = styled.h1`
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   font-weight: 700;
   color: white;
   -webkit-text-stroke: 1px black;
-  text-decoration: none;
-  max-width: 90%;
-  
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.8rem;
-  }
+  line-height: 1.2;
+  margin: 0; /* Remove auto margins */
+  text-wrap: balance;
 `;
 
 const SubHeading = styled.p`
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   color: white;
-  margin-top: 0.5rem;
-  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-  width: 100%;
-  max-width: 80%;
-
-  @media (max-width: 768px) {
-    font-size: 1.1rem;
-    max-width: 90%;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-    max-width: 95%;
-  }
+  margin: clamp(0.5rem, 2vw, 1rem) auto 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: min(80ch, 90%);
+  line-height: 1.4;
 `;
 
 const Button = styled(Link)`
   background-color: ${({ primary }) => (primary ? "#3182ce" : "#e2e8f0")};
   color: ${({ primary }) => (primary ? "white" : "#2d3748")};
-  padding: 0.75rem 1.5rem;
+  padding: clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
   border-radius: 0.375rem;
   text-decoration: none;
-  transition: background-color 0.3s ease;
-  text-align: center;
+  transition: all 0.3s ease;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  min-width: 120px;
+  border: 2px solid transparent;
+  text-align: center; /* Center button text */
 
   &:hover {
     background-color: ${({ primary }) => (primary ? "#2b6cb0" : "#edf2f7")};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  @media (max-width: 480px) {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+  @media (pointer: coarse) {
+    padding: 1rem 1.5rem;
   }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: clamp(0.75rem, 2vw, 1rem);
   flex-wrap: wrap;
-  margin-top: 5%;
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+  margin-top: clamp(2rem, 5vw, 3rem);
+  width: 100%;
 `;
 
 const Home = () => {
@@ -126,14 +118,16 @@ const Home = () => {
   return (
     <>
       <Container>
-        <div>
+        <ContentWrapper>
           <Heading>Master a New Language with Confidence</Heading>
-          <SubHeading>Unlock new opportunities by learning a language that fits your goals.</SubHeading>
+          <SubHeading>
+            Unlock new opportunities by learning a language that fits your goals.
+          </SubHeading>
           <ButtonWrapper>
             <Button to="/courses" primary>Get Started</Button>
             <Button to="/courses">Explore Courses</Button>
           </ButtonWrapper>
-        </div>
+        </ContentWrapper>
       </Container>
       <About />
       <Contact />

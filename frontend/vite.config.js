@@ -8,6 +8,11 @@ export default defineConfig({
     react(),
     visualizer({ open: true }) // Opens a visual report in the browser
   ],
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+    },
+  },
   build: {
     rollupOptions: {
       output: {
