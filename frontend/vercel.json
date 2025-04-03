@@ -3,7 +3,7 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Encoding", "value": "br" }  // Enables Brotli compression
+        { "key": "Content-Encoding", "value": "br" }
       ]
     },
     {
