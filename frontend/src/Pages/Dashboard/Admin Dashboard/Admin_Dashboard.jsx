@@ -13,9 +13,9 @@ import { FiUsers, FiBook, FiDollarSign, FiActivity } from "react-icons/fi";
 import AdminSidebar from "../Admin-Sidebar";
 import DashboardBanner from "../../Layout_Components/Dashboard_Banner";
 
-// Styled components
 const DashboardContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   min-height: 100vh;
 `;
 
@@ -23,6 +23,7 @@ const Content = styled.div`
   flex: 1;
   padding: 2rem;
   background: #f8f9fa;
+  width: 100%;
 `;
 
 const AnalyticsGrid = styled.div`
@@ -72,41 +73,23 @@ const CardIcon = styled.div`
   font-size: 1.5rem;
 `;
 
-const ChartContainer = styled.div`
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-  height: 400px;
-`;
-
-const RecentActivityTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const TableHeader = styled.thead`
-  background-color: #f8f9fa;
-`;
-
-const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: #f8f9fa;
+const ChartsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
-const TableCell = styled.td`
-  padding: 1rem;
-  border-bottom: 1px solid #dee2e6;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
+const ChartContainer = styled.div`
+  flex: 1;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-height: 300px;
 `;
 
 const AdminDashboard = () => {
@@ -122,32 +105,27 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Fetch total users
         const usersResponse = await fetch("/api/dashboard/total-users");
         const usersData = await usersResponse.json();
 
-        // Fetch user growth
         const userGrowthResponse = await fetch("/api/dashboard/user-growth");
         const userGrowthData = await userGrowthResponse.json();
 
-        // Fetch recent users
         const recentUsersResponse = await fetch("/api/dashboard/recent-users");
         const recentUsersData = await recentUsersResponse.json();
 
-        // Example for new users calculation (last 30 days)
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         const newUsers = recentUsersData.filter(
           (user) => new Date(user.created_at) >= thirtyDaysAgo
         ).length;
 
-        setDashboardData((prev) => ({
-          ...prev,
-          users: usersData.totalUsers, // Correctly update users state
+        setDashboardData({
+          users: usersData.totalUsers,
           newUsers,
           userGrowth: userGrowthData,
           recentUsers: recentUsersData,
-        }));
+        });
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
@@ -163,9 +141,7 @@ const AdminDashboard = () => {
         <DashboardBanner />
         <AnalyticsGrid>
           <AnalyticsCard>
-            <CardIcon color="#4a90e2">
-              <FiUsers />
-            </CardIcon>
+            <CardIcon color="#4a90e2"><FiUsers /></CardIcon>
             <CardContent>
               <CardTitle>Total Users</CardTitle>
               <CardValue>{dashboardData.users.toLocaleString()}</CardValue>
@@ -173,85 +149,28 @@ const AdminDashboard = () => {
           </AnalyticsCard>
 
           <AnalyticsCard>
-            <CardIcon color="#50e3c2">
-              <FiActivity />
-            </CardIcon>
+            <CardIcon color="#50e3c2"><FiActivity /></CardIcon>
             <CardContent>
               <CardTitle>New Users (30d)</CardTitle>
               <CardValue>+{dashboardData.newUsers.toLocaleString()}</CardValue>
             </CardContent>
           </AnalyticsCard>
-
-          <AnalyticsCard>
-            <CardIcon color="#f5a623">
-              <FiBook />
-            </CardIcon>
-            <CardContent>
-              <CardTitle>Courses Offered</CardTitle>
-              <CardValue>{dashboardData.courses}</CardValue>
-            </CardContent>
-          </AnalyticsCard>
-
-          <AnalyticsCard>
-            <CardIcon color="#7ed321">
-              <FiDollarSign />
-            </CardIcon>
-            <CardContent>
-              <CardTitle>Revenue (30d)</CardTitle>
-              <CardValue>${dashboardData.revenue.toLocaleString()}</CardValue>
-            </CardContent>
-          </AnalyticsCard>
         </AnalyticsGrid>
 
-        <ChartContainer>
-          <h3>User Growth</h3>
-          <ResponsiveContainer width="100%" height="90%">
-            <LineChart data={dashboardData.userGrowth}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="users"
-                stroke="#4a90e2"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-
-        <ChartContainer>
-          <h3>New Enrollees</h3>
-          <RecentActivityTable>
-            <TableHeader>
-              <tr>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Join Date</TableCell>
-                <TableCell>Enrollment Status</TableCell>
-                <TableCell>Enrolled Course</TableCell>
-              </tr>
-            </TableHeader>
-            <tbody>
-              {dashboardData.recentUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>
-                    {user.first_name} {user.last_name}
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    {new Date(user.created_at).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {user.enrolled_course_name ? "Enrolled" : "Not Enrolled"}
-                  </TableCell>
-                  <TableCell>{user.enrolled_course_name || "N/A"}</TableCell>
-                </TableRow>
-              ))}
-            </tbody>
-          </RecentActivityTable>
-        </ChartContainer>
+        <ChartsContainer>
+          <ChartContainer>
+            <h3>Course Tracking</h3>
+            <ResponsiveContainer width="100%" height="90%">
+              <LineChart data={dashboardData.userGrowth}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="users" stroke="#4a90e2" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </ChartsContainer>
       </Content>
     </DashboardContainer>
   );

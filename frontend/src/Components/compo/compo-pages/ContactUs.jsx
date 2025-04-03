@@ -41,7 +41,7 @@ const ContactForm = () => {
         <BackgroundImage />
         <Content>
           <MainTitle>Get in Touch</MainTitle>
-          <SubTitle>We're here to help you 24/7</SubTitle>
+          <SubTitle>We're here to help you </SubTitle>
         </Content>
       </LeftSection>
       <RightSection>
@@ -127,7 +127,7 @@ const BackgroundImage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('https://images.unsplash.com/photo-1586769852044-692d6e3703f0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNvbnRhY3QlMjB1c3xlbnwwfHwwfHx8MA%3D%3D') center/cover;
+  background: url('https://images.unsplash.com/photo-1528747045269-390fe33c19f2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGNvbnRhY3R8ZW58MHx8MHx8fDA%3D') center/cover;
   opacity: 0.9;
 `;
 
@@ -147,6 +147,7 @@ const Content = styled.div`
 const MainTitle = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  color:white;
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -156,7 +157,7 @@ const MainTitle = styled.h1`
 const SubTitle = styled.p`
   font-size: 1.2rem;
   opacity: 0.9;
-  color: black;
+  color:white;
 
   @media (max-width: 768px) {
     font-size: 1rem;

@@ -1,124 +1,83 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { FiUsers, FiBook, FiDollarSign, FiActivity } from "react-icons/fi";
 import AdminSidebar from "../Admin-Sidebar";
 import DashboardBanner from "../../Layout_Components/Dashboard_Banner";
 import Pagination from "../../Layout_Components/Pagination";
 
-// Styled components for layout
 const DashboardContainer = styled.div`
   display: flex;
   min-height: 100vh;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Content = styled.div`
   flex: 1;
-  padding: 2rem;
+  padding: 1rem;
   background: #f8f9fa;
-`;
-
-const AnalyticsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-`;
-
-const AnalyticsCard = styled.div`
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
   align-items: center;
 `;
 
-const CardIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  background-color: ${(props) => props.color};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-`;
-
-const ChartContainer = styled.div`
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
-  height: 400px;
-`;
-
-// Styled Components for User Table
 const Container = styled.div`
-  padding: 2rem;
+height:100vh;
+  width: 100%;
+  max-width: 100vw;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
 `;
 
 const Heading = styled.h2`
   text-align: center;
-  margin-bottom: 1rem;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-  justify-content: center;
-`;
-
-const Input = styled.input`
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-`;
-
-const Button = styled.button`
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  background-color: #1890ff;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: #40a9ff;
-  }
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  min-width: 100%;
+  font-size: 0.8rem;
 `;
 
 const Th = styled.th`
   border: 1px solid #ddd;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background-color: #f4f4f4;
+  font-size: 0.8rem;
 `;
 
 const Td = styled.td`
   border: 1px solid #ddd;
-  padding: 0.75rem;
+  padding: 0.5rem;
   text-align: center;
+  font-size: 0.8rem;
 `;
 
-// User Management Table Component
+const Button = styled.button`
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #1890ff;
+  color: white;
+  cursor: pointer;
+  font-size: 0.7rem;
+  &:hover {
+    background-color: #40a9ff;
+  }
+`;
+
 const UserTable = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({ username: "", email: "", password: "", role: "client" });
-  const [editUserId, setEditUserId] = useState(null);
-  const [editUserData, setEditUserData] = useState({ username: "", email: "", password: "", role: "" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
 
   useEffect(() => {
     fetchUsers();
@@ -133,94 +92,56 @@ const UserTable = () => {
     }
   };
 
-  const handleCreateUser = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("http://localhost:5001/api/users", newUser);
-      setNewUser({ username: "", email: "", password: "", role: "client" });
-      fetchUsers();
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
-  };
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const handleDeleteUser = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5001/api/users/${id}`);
-      fetchUsers();
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
-
-  const handleEditUser = (user) => {
-    setEditUserId(user.id);
-    setEditUserData({ username: user.username, email: user.email, password: "", role: user.role });
-  };
-
-  const handleUpdateUser = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`http://localhost:5001/api/users/${editUserId}`, editUserData);
-      setEditUserId(null);
-      fetchUsers();
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Container>
       <Heading>User Management</Heading>
-      <Form onSubmit={handleCreateUser}>
-        <Input type="text" placeholder="Username" value={newUser.username} onChange={(e) => setNewUser({ ...newUser, username: e.target.value })} required />
-        <Input type="email" placeholder="Email" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} required />
-        <Input type="password" placeholder="Password" value={newUser.password} onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} required />
-        <Button type="submit">Add User</Button>
-      </Form>
-
-      <Table>
-        <thead>
-          <tr>
-            <Th>ID</Th>
-            <Th>Username</Th>
-            <Th>Email</Th>
-            <Th>Role</Th>
-            <Th>Course</Th>
-            <Th>Actions</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <Td>{user.id}</Td>
-              <Td>{user.username}</Td>
-              <Td>{user.email}</Td>
-              <Td>{user.role}</Td>
-              <Td>{user.enrolled_course_name}</Td>
-              <Td>
-                <Button onClick={() => handleEditUser(user)}>Edit</Button>
-                <Button onClick={() => handleDeleteUser(user.id)} style={{ backgroundColor: "#ff4d4f" }}>Delete</Button>
-              </Td>
+      <div style={{ overflowX: "auto" }}>
+        <Table>
+          <thead>
+            <tr>
+              <Th>ID</Th>
+              <Th>Username</Th>
+              <Th>Email</Th>
+              <Th>Role</Th>
+              <Th>Course</Th>
+              <Th>Actions</Th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {currentUsers.map((user) => (
+              <tr key={user.id}>
+                <Td>{user.id}</Td>
+                <Td>{user.username}</Td>
+                <Td>{user.email}</Td>
+                <Td>{user.role}</Td>
+                <Td>{user.enrolled_course_name}</Td>
+                <Td>
+                  <Button>Edit</Button>
+                  <Button style={{ backgroundColor: "#ff4d4f", marginLeft: "0.3rem" }}>Delete</Button>
+                </Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      <Pagination usersPerPage={usersPerPage} totalUsers={users.length} paginate={paginate} />
     </Container>
   );
 };
 
-// Admin Dashboard
 const AdminUsers = () => {
   return (
     <DashboardContainer>
       <AdminSidebar />
       <Content>
         <DashboardBanner />
-
-        {/* User Management Section */}
         <UserTable />
-        <Pagination />
       </Content>
     </DashboardContainer>
   );
