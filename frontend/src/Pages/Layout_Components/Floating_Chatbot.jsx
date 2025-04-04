@@ -8,21 +8,40 @@ const ChatContainer = styled.div`
   bottom: 20px;
   right: 20px;
   width: 350px;
-  max-width: 90%;
   background: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
   display: ${({ open }) => (open ? "block" : "none")};
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    right: 5%;
+    bottom: 10px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+  }
 `;
 
 const ChatHeader = styled.div`
   background: #4a90e2;
   color: white;
-  padding: 10px;
+  padding: 12px;
   font-weight: bold;
   text-align: center;
   position: relative;
+  font-size: 1.1rem;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 1rem;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -33,14 +52,32 @@ const CloseButton = styled.button`
   background: transparent;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 1.5rem;
   cursor: pointer;
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const ChatBody = styled.div`
   padding: 10px;
   height: 300px;
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
+
+  p {
+    margin: 8px 0;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 const ChatInputContainer = styled.div`
@@ -54,6 +91,10 @@ const InputRow = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  @media (max-width: 480px) {
+    gap: 3px;
+  }
 `;
 
 const ChatInput = styled.input`
@@ -62,6 +103,12 @@ const ChatInput = styled.input`
   border: 1px solid #ddd;
   border-radius: 5px;
   outline: none;
+  font-size: 0.95rem;
+
+  @media (max-width: 480px) {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
 `;
 
 const SendButton = styled.button`
@@ -71,9 +118,15 @@ const SendButton = styled.button`
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 0.95rem;
 
   &:hover {
     background: #4a90e2;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 10px;
+    font-size: 0.85rem;
   }
 `;
 
@@ -81,6 +134,10 @@ const IconRow = styled.div`
   display: flex;
   gap: 5px;
   margin-top: 5px;
+
+  @media (max-width: 480px) {
+    gap: 3px;
+  }
 `;
 
 const IconButton = styled.button`
@@ -94,10 +151,15 @@ const IconButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 1.2rem;
 
   &:hover {
     background: ${({ hoverColor }) => hoverColor || "#bbb"};
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    font-size: 1rem;
   }
 `;
 
@@ -114,7 +176,14 @@ const ChatButton = styled.button`
   border-radius: 50%;
   overflow: hidden;
   z-index: 1000;
-  display: ${({ open }) => (open ? "none" : "block")}; /* Hide button when chat is open */
+  display: ${({ open }) => (open ? "none" : "block")};
+
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
+    bottom: 10px;
+    right: 10px;
+  }
 
   img {
     width: 100%;

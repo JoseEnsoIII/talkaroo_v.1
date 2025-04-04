@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import About from "../../Components/compo/compo-pages/AboutUs";
-import Contact from "../../Components/compo/compo-pages/ContactUs";
+import About from "../../Components/Section/AboutUs";
+import Contact from "../../Components/Section/ContactUs";
+import WhyChooseUsPage from "../../Components/Section/WhyChooseUS";
+import BloggingPage from "../../Components/Section/Blog";
 
 // Styled Components
 const Container = styled.div`
@@ -124,12 +126,14 @@ const Home = () => {
             Unlock new opportunities by learning a language that fits your goals.
           </SubHeading>
           <ButtonWrapper>
-            <Button to="/courses" primary>Get Started</Button>
+            <Button to="/enrollment" primary>Start Learning</Button>
             <Button to="/courses">Explore Courses</Button>
           </ButtonWrapper>
         </ContentWrapper>
       </Container>
       <About />
+      <WhyChooseUsPage />
+      <BloggingPage />
       <Contact />
     </>
   );

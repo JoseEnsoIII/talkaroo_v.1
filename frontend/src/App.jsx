@@ -7,8 +7,6 @@ import LazyLoading from "./Pages/Layout_Components/LazyLoading"; // Lottie anima
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./Pages/Static/Home"));
-const AboutUs = lazy(() => import("./Components/compo/compo-pages/AboutUs"));
-const ContactUs = lazy(() => import("./Components/compo/compo-pages/ContactUs"));
 const PrivacyPolicy = lazy(() => import("./Components/compo/compo-pages/Privacy-Policy"));
 const TermsOfService = lazy(() => import("./Components/compo/compo-pages/TermsofService"));
 const NotFound = lazy(() => import("./Pages/Static/NotFound"));
@@ -53,8 +51,6 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
-          <Route path="/about-us" element={<><Navbar /><AboutUs /><Footer /></>} />
-          <Route path="/contact-us" element={<><Navbar /><ContactUs /><Footer /></>} />
           <Route path="/privacy-policy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
           <Route path="/terms-of-service" element={<><Navbar /><TermsOfService /><Footer /></>} />
           
