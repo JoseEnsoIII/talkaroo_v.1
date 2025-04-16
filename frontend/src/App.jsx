@@ -53,7 +53,7 @@ function App() {
           <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
           <Route path="/privacy-policy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
           <Route path="/terms-of-service" element={<><Navbar /><TermsOfService /><Footer /></>} />
-          
+
           {/* Auth Pages */}
           <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
           <Route path="/signup" element={<><Navbar /><SignUp /><Footer /></>} />
