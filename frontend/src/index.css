@@ -1,12 +1,12 @@
 /* ===== Base Styles ===== */
 :root {
-    --primary-color: #4F46E5;     /* New indigo color */
-    --secondary-color: linear-gradient(135deg, #4A90E2 0%, #6C5CE7 100%);   /* Complementary indigo */
-    --accent-color: #f59e0b;      /* Warm orange */
-    --text-color: #000000;        /* Dark gray */
-    --light-bg: #f8fafc;          /* Off-white */
-    --success-color: #10b981;     /* Green */
-    --error-color: #ef4444;       /* Red */
+    --primary-color: #4F46E5;    
+    --secondary-color: linear-gradient(135deg, #13072e 0%, #3f2182 100%);   /* Complementary indigo */
+    --accent-color: #f59e0b;   
+    --text-color: #000000;        
+    --light-bg: #f8fafc;          
+    --success-color: #10b981;    
+    --error-color: #ef4444;     
     --indigo-gradient: linear-gradient(135deg, #4F46E5 0%, #6366f1 100%);
   }
   
@@ -20,16 +20,21 @@
     max-width: 100vw;
     overflow-x: hidden;
   }
-
+  h1, h2, h3, p {
+    font-family: 'Poppins', sans-serif;
+  }
   /* ===== Typography ===== */
   h1 {
-    font-size: 2.5rem;
+    font-size: 24px;
+    font-size: bold;
     font-weight: 800;
     color: var(--text-color);
     margin: 2rem 0;
     line-height: 1.2;
     position: relative;
     display: inline-block;
+    font-family: poppins
+    ;
   }
   
   h1:after {
