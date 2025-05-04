@@ -1,224 +1,302 @@
+import React from 'react';
 import styled from 'styled-components';
+import {
+  FaChalkboardTeacher,
+  FaRobot,
+  FaGlobe,
+  FaGraduationCap,
+  FaHandsHelping,
+  FaLinkedin,
+  FaFacebook
+} from 'react-icons/fa';
 
-const plans = [
-  {
-    level: "Basic",
-    title: "Perfect for casual learners getting started",
-    price: "FREE",
-    features: [
-      " Access to 1 language",
-      " 10 beginner lessons",
-      " Limited practice quizzes",
-      " Community support"
-    ],
-    buttonText: "Start for Free",
-    buttonLink: "/signup/basic"
-  },
-  {
-    level: "Pro",
-    title: "Ideal for committed learners – pay per course",
-    price: "$29",
-    features: [
-      " All Basic features +",
-      " Full lesson library access",
-      " Interactive grammar & vocab exercises",
-      " AI pronunciation coach"
-    ],
-    buttonText: "Upgrade to Pro",
-    buttonLink: "/signup/pro"
-  },
-  {
-    level: "Premium",
-    title: "Best for serious learners and polyglots",
-    price: "$35",
-    features: [
-      " All Pro features +",
-      " Access to all languages",
-      " 1-on-1 tutor sessions",
-      " Official course completion certificates"
-    ],
-    buttonText: "Go Premium",
-    buttonLink: "/signup/premium"
-  }
-];
+const AboutUsPage = () => {
+  return (
+    <AboutContainer>
+      
 
+      <MissionSection>
+        
+        <SectionTitle>Our Mission in Talkaroo</SectionTitle>
+        <SectionText>
+          At Talkaroo, we're revolutionizing language education by combining the depth of real teacher knowledge with the
+          power of artificial intelligence. Our mission is to make language learning accessible, effective, and
+          personalized for every student worldwide.
+        </SectionText>
+      </MissionSection>
 
+      <ApproachSection>
+        <SectionTitle>Our Unique Approach</SectionTitle>
+        <ApproachGrid>
+          <ApproachCard>
+            <FaChalkboardTeacher size={40} color="#3B82F6" />
+            <ApproachTitle>Expert-Created Content</ApproachTitle>
+            <ApproachText>
+              All our core curriculum is developed by certified language professors with 10+ years of teaching experience.
+              We ensure academic rigor and pedagogical effectiveness in every lesson.
+            </ApproachText>
+          </ApproachCard>
 
-const PricingSection = () => (
-  <StyledSection>
-    <Title>Course Pricing</Title>
-    <PlansGrid>
-      {plans.map((plan, index) => (
-        <PlanCard key={index} isHighlighted={index === 1}>
-          <PlanLevel>{plan.level}</PlanLevel>
-          
-          {plan.price && <PlanPrice>{plan.price}</PlanPrice>}
-          
-          <PlanTitle>{plan.title}</PlanTitle>
+          <ApproachCard>
+            <FaRobot size={40} color="#10B981" />
+            <ApproachTitle>AI-Powered Enhancement</ApproachTitle>
+            <ApproachText>
+              Our AI tutors provide 24/7 practice opportunities, instant feedback, and personalized recommendations
+              to supplement human teaching. They adapt to your learning style and pace.
+            </ApproachText>
+          </ApproachCard>
 
-          <FeaturesList>
-            {plan.features.map((feature, i) => (
-              <FeatureItem key={i}>{feature}</FeatureItem>
-            ))}
-          </FeaturesList>
+          <ApproachCard>
+            <FaGlobe size={40} color="#8B5CF6" />
+            <ApproachTitle>Cultural Immersion</ApproachTitle>
+            <ApproachText>
+              Beyond vocabulary and grammar, we teach real-world language use with cultural context from native speakers,
+              enhanced by AI-simulated immersion scenarios.
+            </ApproachText>
+          </ApproachCard>
+        </ApproachGrid>
+      </ApproachSection>
 
-          <SignupButton isHighlighted={index === 1}>{plan.buttonText}</SignupButton>
-        </PlanCard>
-      ))}
-    </PlansGrid>
-  </StyledSection>
-);
+      <TeamSection>
+        <SectionTitle>Meet Our Educator Team</SectionTitle>
+        <SectionText>
+          Our faculty includes PhD linguists, certified language instructors, and native speakers who design all
+          learning materials and oversee our AI training processes.
+        </SectionText>
 
-const StyledSection = styled.section`
-  padding: 5rem 1.5rem;
-  background: white;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+        <TeamGrid>
+          <TeamMember>
+            <MemberPhoto src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Dr. Elena Rodriguez" />
+            <TeamMemberName>Dr. Elena Rodriguez</TeamMemberName>
+            <TeamMemberTitle>Head of Spanish Curriculum</TeamMemberTitle>
+            <TeamMemberBio>
+              Former university professor with 15 years experience teaching Spanish as a second language.
+            </TeamMemberBio>
+            <SocialLinks>
+              <SocialLink href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                <FaLinkedin />
+              </SocialLink>
+              <SocialLink href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <FaFacebook />
+              </SocialLink>
+            </SocialLinks>
+          </TeamMember>
+
+          <TeamMember>
+            <MemberPhoto src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Prof. Chen Wei" />
+            <TeamMemberName>Prof. Chen Wei</TeamMemberName>
+            <TeamMemberTitle>Mandarin Program Director</TeamMemberTitle>
+            <TeamMemberBio>
+              Beijing Normal University graduate specializing in immersive language teaching methods.
+            </TeamMemberBio>
+            <SocialLinks>
+              <SocialLink href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                <FaLinkedin />
+              </SocialLink>
+              <SocialLink href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <FaFacebook />
+              </SocialLink>
+            </SocialLinks>
+          </TeamMember>
+
+          <TeamMember>
+            <MemberPhoto src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Dr. Sophie Laurent" />
+            <TeamMemberName>Dr. Sophie Laurent</TeamMemberName>
+            <TeamMemberTitle>French Language Chair</TeamMemberTitle>
+            <TeamMemberBio>
+              Sorbonne-educated linguist and author of three French language textbooks.
+            </TeamMemberBio>
+            <SocialLinks>
+              <SocialLink href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                <FaLinkedin />
+              </SocialLink>
+              <SocialLink href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <FaFacebook />
+              </SocialLink>
+            </SocialLinks>
+          </TeamMember>
+        </TeamGrid>
+      </TeamSection>
+    </AboutContainer>
+  );
+};
+
+// Styled Components
+const AboutContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  color: #333;
 `;
 
 
-const PlansGrid = styled.div`
+const SectionTitle = styled.h2`
+  text-align: center;
+  font-size: 2rem;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 1rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #6366f1;
+    border-radius: 3px;
+  }
+`;
+
+const SectionText = styled.p`
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #475569;
+`;
+
+const ApproachSection = styled.section`
+  margin-bottom: 4rem;
+`;
+
+const ApproachGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+`;
+
+const ApproachCard = styled.div`
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const ApproachTitle = styled.h3`
+  margin: 1rem 0;
+  color: #1e293b;
+  font-size: 1.25rem;
+`;
+
+const ApproachText = styled.p`
+  color: #64748b;
+  line-height: 1.6;
+`;
+
+const TeamSection = styled.section`
+  background: #f8fafc;
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  margin: 4rem 0;
+`;
+
+const TeamGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+  margin: 3rem auto 0;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    max-width: 400px;
   }
 `;
-const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #2d3436;
-  margin: 0 auto 3rem auto;
+
+const TeamMember = styled.div`
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   text-align: center;
-  position: relative;
-
-  &::after {
-    content: '';
-    width: 60px;
-    height: 4px;
-    background: #6c5ce7;
-    display: block;
-    margin: 0.75rem auto 0;
-    border-radius: 2px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-`;
-
-
-const PlanCard = styled.article`
-  background: ${props => props.isHighlighted ? '#f8f5ff' : '#fff'};
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  border: 1px solid ${props => props.isHighlighted ? '#6c5ce7' : '#e0e0e0'};
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.3s ease;
-  box-shadow: ${props => props.isHighlighted ? '0 10px 30px rgba(108, 92, 231, 0.15)' : '0 5px 15px rgba(0, 0, 0, 0.03)'};
-  
+  border: 1px solid #e2e8f0;
+
   &:hover {
     transform: translateY(-5px);
-    box-shadow: ${props => props.isHighlighted ? '0 15px 35px rgba(108, 92, 231, 0.2)' : '0 10px 25px rgba(0, 0, 0, 0.08)'};
-  }
-
-  @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
 `;
 
-const PlanLevel = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2d3436;
-  margin-bottom: 0.5rem;
-  text-align: center;
-`;
-
-const PlanPrice = styled.div`
-  font-size: 3rem;
-  font-weight: 700;
-  color: #6c5ce7;
-  margin: 1rem 0;
-  position: relative;
-  
-  &::before {
-    content: attr(data-price);
-    font-size: 1.5rem;
-    position: absolute;
-    top: 0.5rem;
-    left: -1rem;
-  }
-`;
-
-const PlanTitle = styled.p`
-  font-size: 0.95rem;
-  color: #636e72;
+const MemberPhoto = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #e2e8f0;
   margin-bottom: 1.5rem;
-  text-align: center;
-  line-height: 1.5;
 `;
 
-const FeaturesList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem 0 2.5rem;
-  width: 100%;
-  display: grid;
-  gap: 0.75rem;
+const TeamMemberName = styled.h3`
+  margin: 0.5rem 0;
+  color: #1e293b;
+  font-size: 1.25rem;
 `;
 
-const FeatureItem = styled.li`
-  color: #2d3436;
-  padding: 0.5rem 0;
+const TeamMemberTitle = styled.p`
+  color: #6366f1;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`;
+
+const TeamMemberBio = styled.p`
+  color: #64748b;
   font-size: 0.95rem;
-  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
+const SocialLink = styled.a`
+  color: #64748b;
+  transition: all 0.3s ease;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  
-  &::before {
-    content: "✓";
-    color: #6c5ce7;
-    font-weight: bold;
-  }
-`;
-
-const SignupButton = styled.button`
-  background: ${props => props.isHighlighted ? '#6c5ce7' : 'white'};
-  color: ${props => props.isHighlighted ? 'white' : '#6c5ce7'};
-  border: 1px solid #6c5ce7;
-  padding: 1rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  font-weight: 600;
-  margin-top: auto;
-  box-shadow: ${props => props.isHighlighted ? '0 4px 14px rgba(108, 92, 231, 0.3)' : 'none'};
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f1f5f9;
 
   &:hover {
-    background: ${props => props.isHighlighted ? '#5d4bcf' : '#f8f5ff'};
-    transform: translateY(-2px);
-    box-shadow: ${props => props.isHighlighted ? '0 6px 20px rgba(108, 92, 231, 0.4)' : '0 4px 10px rgba(108, 92, 231, 0.1)'};
-  }
-
-  &:active {
-    transform: translateY(0);
+    transform: scale(1.1);
+    color: white;
+    background: ${props => props.children.type === FaLinkedin ? '#0A66C2' : '#1877F2'};
   }
 `;
+const MissionSection = styled.section`
+margin-top:5rem;
+  margin-bottom: 5rem;
+`;
 
-export default PricingSection;
+export default AboutUsPage;

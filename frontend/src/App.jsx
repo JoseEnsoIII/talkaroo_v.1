@@ -1,7 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import Navbar from "./Pages/Layout_Components/Navbar";
+import Navbar from "./Pages/Header/Navbar";
 import Footer from "./Pages/Layout_Components/Footer";
+import AboutUs from './Components/Section/AboutUs';
+import ContactUs from './Components/Section/ContactUs';
+
 import Chatbot from "./Pages/Layout_Components/Floating_Chatbot";
 import LazyLoading from "./Pages/Layout_Components/LazyLoading"; // Lottie animation loader
 
@@ -27,10 +30,9 @@ const Vocabulary = lazy(() => import("./Pages/Dynamic Pages/Vocabulary"));
 const Grammar = lazy(() => import("./Pages/Dynamic Pages/Grammar"));
 const Practice = lazy(() => import("./Pages/Dynamic Pages/Practice"));
 const AI = lazy(() => import("./Pages/Dynamic Pages/AI"));
-const Courses = lazy(() => import("./Pages/Dynamic Pages/Courses"));
+const Courses = lazy(() => import("./Pages/Dynamic Pages/Course"));
 const EnrollmentForm = lazy(() => import("./Pages/Dynamic Pages/Enrollment-Page"));
 const Payment = lazy(() => import("./Pages/Dynamic Pages/Payment"));
-const Feedback = lazy(() => import("./Components/compo/compo-pages/Feedback"));
 
 // Admin Pages
 const AdminDashboard = lazy(() => import("./Pages/Dashboard/Admin Dashboard/Admin_Dashboard"));
@@ -53,6 +55,8 @@ function App() {
           <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
           <Route path="/privacy-policy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
           <Route path="/terms-of-service" element={<><Navbar /><TermsOfService /><Footer /></>} />
+          <Route path="/about-us" element={<><Navbar /><AboutUs /><Footer /></>} /> 
+          <Route path="/contact-us" element={<><Navbar /><ContactUs /><Footer /></>} />
 
           {/* Auth Pages */}
           <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
@@ -65,7 +69,6 @@ function App() {
           <Route path="/practice" element={<><Navbar /><Practice /><Footer /></>} />
           <Route path="/Talkaroo-AI" element={<><Navbar /><AI /><Footer /></>} />
           <Route path="/courses" element={<><Navbar /><Courses /><Footer /></>} />
-          <Route path="/feedback" element={<><Navbar /><Feedback /><Footer /></>} />
           <Route path="/enroll/:courseName" element={<><Navbar /><EnrollmentForm /><Footer /></>} />
           <Route path="/payment" element={<><Navbar /><Payment /><Footer /></>} />
 

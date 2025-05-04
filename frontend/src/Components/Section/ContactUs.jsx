@@ -36,7 +36,7 @@ const ContactForm = () => {
   };
 
   return (
-    <Container>
+    <Container className="#contact-us">
       <LeftSection>
         <BackgroundImage />
         <Content>
